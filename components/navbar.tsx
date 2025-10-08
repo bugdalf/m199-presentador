@@ -29,32 +29,23 @@ export function Navbar() {
   }
 
   return (
-    <nav className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <Link href="/" className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-foreground">
-            <span className="text-lg font-bold text-background">D</span>
-          </div>
-          <span className="text-xl font-bold">Demo</span>
-        </Link>
+    <nav className="flex justify-center p-6 relative">
 
-        <div className="flex items-center gap-4">
-          {isAuthenticated ? (
-            <Button variant="outline" onClick={handleLogout}>
-              Cerrar Sesión
-            </Button>
-          ) : (
-            <>
-              <Link href="/login">
-                <Button variant="ghost">Iniciar Sesión</Button>
-              </Link>
-              <Link href="/login">
-                <Button>Comenzar</Button>
-              </Link>
-            </>
-          )}
-        </div>
-      </div>
+      <Link href="/">
+        <Button variant="link">INICIO</Button>
+      </Link>
+      <Link href="/presentacion">
+        <Button variant="link">PRESENTACIÓN</Button>
+      </Link>
+      {isAuthenticated ? (
+        <Button variant="outline" onClick={handleLogout}>
+          Cerrar Sesión
+        </Button>
+      ) : (
+        <Link href="/login" className="absolute right-2">
+          <Button variant="outline">Iniciar Sesión</Button>
+        </Link>
+      )}
     </nav>
   )
 }

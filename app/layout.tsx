@@ -1,7 +1,9 @@
 import type { Metadata } from 'next'
-import { GeistSans } from 'geist/font/sans'
-import { GeistMono } from 'geist/font/mono'
+import "@fontsource/bungee-shade"
+import "@fontsource/bungee"
+import "@fontsource/poppins"
 import '../styles/globals.css'
+import { Navbar } from '@/components/navbar'
 
 export const metadata: Metadata = {
   title: 'misión 1-99 - presentación',
@@ -15,7 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
+      <body className="font-sans antialiased bg-black">
+        <Navbar />
+
         {children}
       </body>
     </html>
