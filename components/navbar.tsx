@@ -2,15 +2,17 @@
 
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { usePathname, useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { auth } from "@/lib/firebase"
 import { onAuthStateChanged, signOut } from "firebase/auth"
+import { useFullscreen } from "@/hooks/use-fullscreen"
 
 export function Navbar() {
-  const pathname = usePathname()
-  const router = useRouter()
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const router = useRouter();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const isFullscreen = useFullscreen();
+
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -22,30 +24,33 @@ export function Navbar() {
   const handleLogout = async () => {
     try {
       await signOut(auth)
-      router.push("/")
     } catch (error) {
       console.error("Error al cerrar sesión:", error)
     }
   }
 
   return (
-    <nav className="flex justify-center p-6 relative">
+    <div>
+      {!isFullscreen && (
+        <nav className="flex justify-center py-1 px-6 relative">
 
-      <Link href="/">
-        <Button variant="link">INICIO</Button>
-      </Link>
-      <Link href="/presentacion">
-        <Button variant="link">PRESENTACIÓN</Button>
-      </Link>
-      {isAuthenticated ? (
-        <Button variant="outline" onClick={handleLogout}>
-          Cerrar Sesión
-        </Button>
-      ) : (
-        <Link href="/login" className="absolute right-2">
-          <Button variant="outline">Iniciar Sesión</Button>
-        </Link>
+          <Link href="/">
+            <Button variant="link">INICIO</Button>
+          </Link>
+          <Link href="/presentacion">
+            <Button variant="link">PRESENTACIÓN</Button>
+          </Link>
+          {isAuthenticated ? (
+            <Button variant="outline" onClick={handleLogout} className="absolute right-2">
+              Cerrar Sesión
+            </Button>
+          ) : (
+            <Link href="/login" className="absolute right-2">
+              <Button variant="outline">Iniciar Sesión</Button>
+            </Link>
+          )}
+        </nav>
       )}
-    </nav>
+    </div>
   )
 }

@@ -1,17 +1,14 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import Link from "next/link"
 import { signInWithEmailAndPassword } from "firebase/auth"
 import { auth } from "@/lib/firebase"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Navbar } from "@/components/navbar"
 
 export default function LoginPage() {
   const [email, setEmail] = useState("")
@@ -27,10 +24,9 @@ export default function LoginPage() {
 
     try {
       await signInWithEmailAndPassword(auth, email, password)
-      router.push("/dashboard")
+      router.push("/")
     } catch (err: any) {
       setError("Credenciales inválidas. Por favor, intenta de nuevo.")
-      console.error(err)
     } finally {
       setLoading(false)
     }
@@ -38,9 +34,13 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Navbar />
-
-      <div className="container mx-auto flex min-h-[calc(100vh-4rem)] items-center justify-center px-4 py-12">
+      <div className="container mx-auto flex flex-col gap-8 min-h-[calc(100vh-4rem)] items-center justify-start px-4 py-12">
+        <div className="flex flex-col justify-center mt-8">
+          <button className="flex flex-col items-center gap-2">
+            <img src="oveja.png" alt="logo ministerio" className="w-12" />
+          </button>
+          <h3 className="text-xl font-mono">MISIÓN 1-99</h3>
+        </div>
         <Card className="w-full max-w-md border-border bg-card">
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl font-bold text-card-foreground">Iniciar Sesión</CardTitle>
@@ -85,15 +85,6 @@ export default function LoginPage() {
                 {loading ? "Iniciando sesión..." : "Iniciar Sesión"}
               </Button>
             </form>
-
-            <div className="mt-6 text-center text-sm text-muted-foreground">
-              <p>
-                ¿No tienes cuenta?{" "}
-                <Link href="/" className="text-foreground underline hover:text-foreground/80">
-                  Volver al inicio
-                </Link>
-              </p>
-            </div>
           </CardContent>
         </Card>
       </div>
