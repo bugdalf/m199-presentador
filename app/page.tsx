@@ -36,7 +36,7 @@ export default function Home() {
 
         <ImageCarousel />
         <Counter targetDate="2025-10-08T20:30:00" />
-        <InfoEvent />
+        <InfoEvent targetDate="2025-10-08T20:30:00" />
         <p className="text-center font-display">---</p>
         <p className="font-bold font-mono mt-8 mb-4">Más sobre nuestro ministerio</p>
         <TikTokEmbed
