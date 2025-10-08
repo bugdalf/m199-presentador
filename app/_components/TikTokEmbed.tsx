@@ -46,9 +46,9 @@ export default function TikTokEmbed({
     <div className='w-full flex justify-center'>
       <div className={`w-fit h-fit rounded-[8px] overflow-hidden ${className}`}>
         <blockquote
-          className=""
+          className="tiktok-embed"
           // cite={`https://www.tiktok.com/@${username}/video/${videoId}`}
-          cite="https://www.tiktok.com/@evangelismo_sin_limites/video/7419263094586740011"
+          cite="https://www.tiktok.com/@evangelismo_sin_limites/video/7428183340903058731"
 
           // data-video-id={videoId}
           data-video-id="7419263094586740011"

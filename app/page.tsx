@@ -37,7 +37,7 @@ export default function Home() {
             'llamado'
           ]}
         />
-        {/* <Contact /> */}
+        <Contact />
       </section>
 
     </div>
