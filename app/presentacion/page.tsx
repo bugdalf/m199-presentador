@@ -5,6 +5,9 @@ import { useEffect, useState } from "react"
 import { auth } from "@/lib/firebase"
 import { useFullscreen } from "@/hooks/use-fullscreen";
 
+import {CldImage} from 'next-cloudinary';
+
+
 export default function Page() {
   const [user, setUser] = useState<User | null>(null);
   const isFullscreen = useFullscreen();
@@ -46,7 +49,17 @@ export default function Page() {
         </div>
       )}
       <div className="border border-dashed w-full h-full">
-        presentacion
+        
+        {/* <CldImage
+          alt="hello"
+          src="cld-sample-5" // Use this sample image or upload your own via the Media Explorer
+          width="500" // Transform the image: auto-crop to square aspect_ratio
+          height="500"
+          crop={{
+            type: 'auto',
+            source: true
+          }}
+        /> */}
       </div>
     </div>
   )
