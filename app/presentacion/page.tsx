@@ -4,9 +4,9 @@ import { onAuthStateChanged, User } from "firebase/auth"
 import { useEffect, useState } from "react"
 import { auth } from "@/lib/firebase"
 import { useFullscreen } from "@/hooks/use-fullscreen";
-
-import {CldImage} from 'next-cloudinary';
-
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { PencilIcon, Presentation, PresentationIcon } from "lucide-react";
 
 export default function Page() {
   const [user, setUser] = useState<User | null>(null);
@@ -34,7 +34,17 @@ export default function Page() {
       {user && (
         <>
           <span className="text-xs font-mono text-cyan-400">MODO LIDER</span>
-          <div className="border border-dashed border-cyan-400 py-1 px-4">Mandos</div>
+          <div className="border border-dashed border-cyan-400 py-1 px-4 m-1 w-full flex justify-between items-center">
+            <Link href="/manage-slides">
+              <Button variant='link'><PresentationIcon />Diapositivas</Button>
+            </Link>
+            <div>
+              mandos principales
+            </div>
+            <Link href="/event">
+              <Button variant='link'><PencilIcon />Evento</Button>
+            </Link>
+          </div>
         </>
       )}
       {!isFullscreen && (
@@ -49,17 +59,6 @@ export default function Page() {
         </div>
       )}
       <div className="border border-dashed w-full h-full">
-        
-        {/* <CldImage
-          alt="hello"
-          src="cld-sample-5" // Use this sample image or upload your own via the Media Explorer
-          width="500" // Transform the image: auto-crop to square aspect_ratio
-          height="500"
-          crop={{
-            type: 'auto',
-            source: true
-          }}
-        /> */}
       </div>
     </div>
   )

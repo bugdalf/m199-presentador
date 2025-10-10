@@ -1,15 +1,45 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { ImageUploader } from "../_components/manage-slides/ImageUploader"
 import { ImageGallery } from "../_components/manage-slides/ImageGallery"
+import { auth } from "@/lib/firebase"
+import { onAuthStateChanged, User } from "firebase/auth"
+import router from "next/router"
 
 
 export default function ManageSlidesPage() {
+  const [user, setUser] = useState<User | null>(null)
+  const [loading, setLoading] = useState(true)
   const [refreshKey, setRefreshKey] = useState(0)
 
   const handleUploadSuccess = () => {
     setRefreshKey((prev) => prev + 1)
+  }
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser)
+      } else {
+        router.push("/login")
+      }
+      setLoading(false)
+    })
+
+    return () => unsubscribe()
+  }, [router])
+
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <div className="text-lg text-muted-foreground">Cargando...</div>
+      </div>
+    )
+  }
+
+  if (!user) {
+    return null
   }
 
   return (
