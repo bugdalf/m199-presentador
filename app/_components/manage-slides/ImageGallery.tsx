@@ -40,7 +40,7 @@ export function ImageGallery({ refresh }: { refresh: number }) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Galería de Imágenes</CardTitle>
+        <CardTitle>Diapositivas actuales</CardTitle>
       </CardHeader>
       <CardContent>
         {loading ? (
@@ -49,17 +49,17 @@ export function ImageGallery({ refresh }: { refresh: number }) {
           </div>
         ) : images.length === 0 ? (
           <div className="text-center py-12 text-muted-foreground">
-            No hay imágenes todavía. ¡Sube tu primera imagen!
+            No hay diapositivas todavía. ¡Sube una!
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             {images.map((image) => (
-              <div key={image.public_id} className="relative aspect-square rounded-lg overflow-hidden bg-muted group">
+              <div key={image.public_id} className="relative aspect-video rounded-lg border border-dashed">
                 <Image
                   src={image.secure_url || "/placeholder.svg"}
                   alt={image.public_id}
                   fill
-                  className="object-cover transition-transform group-hover:scale-105"
+                  className="object-contain transition-transform group-hover:scale-105"
                   sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
                 />
               </div>
