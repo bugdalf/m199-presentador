@@ -7,8 +7,8 @@ import { useFullscreen } from "@/hooks/use-fullscreen";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { PencilIcon, PresentationIcon } from "lucide-react";
-import { SlidesViewer } from "../_components/slides/SlidesViewer";
-import { SlidesControls } from "../_components/slides/SlidesControls";
+import { SlidesViewer } from "@/app/_components/slides/SlidesViewer";
+import { SlidesControls } from "@/app/_components/slides/SlidesControls";
 
 export default function Page() {
   const [user, setUser] = useState<User | null>(null);
@@ -31,21 +31,21 @@ export default function Page() {
     })
     return () => unsubscribe()
   }, [])
+
   return (
-    <div className="h-[calc(100vh5rem)] flex flex-col items-center">
+    <div className="h-[calc(100vh-3rem)] flex flex-col items-center">
       {user && (
         <>
           <span className="text-xs font-mono text-cyan-400">MODO LIDER</span>
-          <div className="border border-dashed border-cyan-400 py-1 px-4 m-1 w-full flex justify-between items-center">
+          <div className="border border-dashed border-cyan-400 py-3 px-4 m-1 w-full flex justify-between items-center rounded-md">
             <Link href="/manage-slides">
-              <Button variant='link'><PresentationIcon />Diapositivas</Button>
+              <Button variant='link'><PresentationIcon className="w-4 h-4 mr-2" /></Button>
             </Link>
             <div className="flex items-center gap-4">
-              <span className="text-xs text-gray-400 hidden sm:inline">Mandos principales</span>
-              <SlidesControls eventId="default" />
+              <SlidesControls eventId="default" isLeader={true} />
             </div>
             <Link href="/event">
-              <Button variant='link'><PencilIcon />Evento</Button>
+              <Button variant='link'><PencilIcon className="w-4 h-4 mr-2" /></Button>
             </Link>
           </div>
         </>
@@ -54,16 +54,15 @@ export default function Page() {
         <div className="w-full mb-2 flex flex-col justify-center items-center">
           <button
             onClick={handleFullscreen}
-            className="text-xs border cursor-pointer p-2"
+            className="text-xs border cursor-pointer p-2 hover:bg-gray-800 transition-colors rounded"
           >
             Pantalla completa
           </button>
-          <span className='md:hidden text-xs'>*Gira tu celular*</span>
+          <span className='md:hidden text-xs text-gray-400 mt-1'>*Gira tu celular*</span>
         </div>
       )}
-      <div className="border border-dashed w-full h-full">
-        {/* Aqui los slides */}
-        <SlidesViewer eventId="default" />
+      <div className="border border-dashed w-full h-full overflow-hidden">
+        <SlidesViewer eventId="default" isLeader={!!user} />
       </div>
     </div>
   )

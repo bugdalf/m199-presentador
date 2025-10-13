@@ -1,6 +1,6 @@
 // hooks/use-slides.ts
 import { useEffect, useState } from 'react';
-import { ref, onValue, set, get } from 'firebase/database';
+import { ref, onValue, set } from 'firebase/database';
 import { database } from '@/lib/firebase';
 
 interface SlideState {
@@ -9,7 +9,7 @@ interface SlideState {
   timestamp: number;
 }
 
-export function useSlides(eventId: string = 'default') {
+export function useSlides(eventId: string = 'default', isLeader: boolean = false) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [totalSlides, setTotalSlides] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -23,14 +23,26 @@ export function useSlides(eventId: string = 'default') {
       if (data) {
         setCurrentSlide(data.currentSlide);
         setTotalSlides(data.totalSlides);
+      } else if (isLeader) {
+        // Solo el líder inicializa si no hay datos
+        set(slideRef, {
+          currentSlide: 0,
+          totalSlides: 0,
+          timestamp: Date.now()
+        });
       }
       setIsLoading(false);
     });
 
     return () => unsubscribe();
-  }, [eventId]);
+  }, [eventId, isLeader]);
 
   const goToSlide = async (slideNumber: number) => {
+    if (!isLeader) {
+      console.warn('Solo el líder puede cambiar de slide');
+      return;
+    }
+    
     const slideRef = ref(database, `events/${eventId}/slides`);
     await set(slideRef, {
       currentSlide: slideNumber,
@@ -40,18 +52,33 @@ export function useSlides(eventId: string = 'default') {
   };
 
   const nextSlide = async () => {
+    if (!isLeader) {
+      console.warn('Solo el líder puede cambiar de slide');
+      return;
+    }
+    
     if (currentSlide < totalSlides - 1) {
       await goToSlide(currentSlide + 1);
     }
   };
 
   const prevSlide = async () => {
+    if (!isLeader) {
+      console.warn('Solo el líder puede cambiar de slide');
+      return;
+    }
+    
     if (currentSlide > 0) {
       await goToSlide(currentSlide - 1);
     }
   };
 
   const setTotal = async (total: number) => {
+    if (!isLeader) {
+      console.warn('Solo el líder puede actualizar el total de slides');
+      return;
+    }
+    
     const slideRef = ref(database, `events/${eventId}/slides`);
     await set(slideRef, {
       currentSlide: currentSlide >= total ? 0 : currentSlide,
@@ -61,6 +88,11 @@ export function useSlides(eventId: string = 'default') {
   };
 
   const resetSlides = async () => {
+    if (!isLeader) {
+      console.warn('Solo el líder puede reiniciar los slides');
+      return;
+    }
+    
     await goToSlide(0);
   };
 
@@ -72,6 +104,7 @@ export function useSlides(eventId: string = 'default') {
     nextSlide,
     prevSlide,
     setTotal,
-    resetSlides
+    resetSlides,
+    isLeader
   };
 }

@@ -8,9 +8,10 @@ import { useEffect } from "react";
 
 interface SlidesControlsProps {
   eventId?: string;
+  isLeader?: boolean;
 }
 
-export function SlidesControls({ eventId = 'default' }: SlidesControlsProps) {
+export function SlidesControls({ eventId = 'default', isLeader = false }: SlidesControlsProps) {
   const { 
     currentSlide, 
     totalSlides, 
@@ -18,7 +19,7 @@ export function SlidesControls({ eventId = 'default' }: SlidesControlsProps) {
     prevSlide, 
     resetSlides,
     goToSlide 
-  } = useSlides(eventId);
+  } = useSlides(eventId, isLeader);
 
   // Manejo de teclas de flecha
   useEffect(() => {
@@ -47,7 +48,7 @@ export function SlidesControls({ eventId = 'default' }: SlidesControlsProps) {
         onClick={prevSlide}
         disabled={currentSlide === 0}
         variant="outline"
-        size="sm"
+        size="lg"
         title="Anterior (←)"
       >
         <ChevronLeftIcon className="w-4 h-4" />
@@ -61,27 +62,11 @@ export function SlidesControls({ eventId = 'default' }: SlidesControlsProps) {
         onClick={nextSlide}
         disabled={currentSlide >= totalSlides - 1}
         variant="outline"
-        size="sm"
+        size="lg"
         title="Siguiente (→)"
       >
         <ChevronRightIcon className="w-4 h-4" />
       </Button>
-
-      {/* Mini navegador */}
-      <div className="flex gap-1 ml-2">
-        {Array.from({ length: totalSlides }).map((_, index) => (
-          <button
-            key={index}
-            onClick={() => goToSlide(index)}
-            className={`w-2 h-2 rounded-full transition-colors ${
-              index === currentSlide 
-                ? 'bg-cyan-400' 
-                : 'bg-gray-600 hover:bg-gray-500'
-            }`}
-            title={`Ir a slide ${index + 1}`}
-          />
-        ))}
-      </div>
     </div>
   );
 }

@@ -1,18 +1,19 @@
 // components/slides-viewer.tsx
 "use client"
 
+import { useSlides } from "@/hooks/use-slides";
 import { useFirestoreSlides } from "@/hooks/use-firestore-slides";
 import { SlideItem } from "./SlideItem";
 import { useEffect } from "react";
-import { useSlides } from "@/hooks/use-slides";
 
 interface SlidesViewerProps {
   eventId?: string;
+  isLeader?: boolean;
 }
 
-export function SlidesViewer({ eventId = 'default' }: SlidesViewerProps) {
+export function SlidesViewer({ eventId = 'default', isLeader = false }: SlidesViewerProps) {
   const { slides, isLoading: slidesLoading, error } = useFirestoreSlides();
-  const { currentSlide, totalSlides, setTotal, isLoading: syncLoading } = useSlides(eventId);
+  const { currentSlide, totalSlides, setTotal, isLoading: syncLoading } = useSlides(eventId, isLeader);
 
   useEffect(() => {
     // Sincronizar el total de slides con Realtime Database
@@ -26,7 +27,7 @@ export function SlidesViewer({ eventId = 'default' }: SlidesViewerProps) {
       <div className="w-full h-full flex items-center justify-center bg-gray-900">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400 mx-auto mb-4"></div>
-          <p className="text-sm text-gray-400">Cargando slides...</p>
+          <p className="text-sm text-gray-400">Cargando presentación...</p>
         </div>
       </div>
     );
@@ -36,8 +37,7 @@ export function SlidesViewer({ eventId = 'default' }: SlidesViewerProps) {
     return (
       <div className="w-full h-full flex items-center justify-center bg-gray-900">
         <div className="text-center p-8">
-          <p className="text-red-400 mb-2">Error al cargar los slides</p>
-          <p className="text-sm text-gray-400">{error.message}</p>
+          <p className="text-red-400 mb-2">Error al cargar la presentación por favor refresca la página</p>
         </div>
       </div>
     );
@@ -47,8 +47,8 @@ export function SlidesViewer({ eventId = 'default' }: SlidesViewerProps) {
     return (
       <div className="w-full h-full flex items-center justify-center bg-gray-900">
         <div className="text-center p-8">
-          <p className="text-gray-400 mb-2">No hay slides disponibles</p>
-          <p className="text-sm text-gray-500">Agrega slides desde el panel de administración</p>
+          <p className="text-gray-400 mb-2">La presentación aun no esta disponible</p>
+          <p className="text-sm text-gray-500">Pronto tendras novedades</p>
         </div>
       </div>
     );
@@ -64,7 +64,7 @@ export function SlidesViewer({ eventId = 'default' }: SlidesViewerProps) {
       )}
 
       {/* Indicador de slide */}
-      <div className="absolute bottom-4 right-4 bg-black/70 backdrop-blur-sm px-4 py-2 rounded-lg text-sm text-white border border-cyan-400/30">
+      <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-sm px-4 py-2 rounded-lg text-sm text-white border border-cyan-400/30">
         <div className="flex items-center gap-2">
           <span className="font-mono font-bold text-cyan-400">
             {currentSlide + 1} / {totalSlides}
@@ -76,11 +76,6 @@ export function SlidesViewer({ eventId = 'default' }: SlidesViewerProps) {
           )}
         </div>
       </div>
-
-      {/* Indicador de carga previo (precarga siguiente slide) */}
-      {slides[currentSlide + 1] && (
-        <link rel="preload" as="image" href={slides[currentSlide + 1].url} />
-      )}
     </div>
   );
 }
