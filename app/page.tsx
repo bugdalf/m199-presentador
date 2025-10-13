@@ -50,7 +50,7 @@ export default function Home() {
           <span className="text-xs font-mono text-cyan-400">MODO LIDER</span>
         )}
         {/* hero */}
-        <h1 className="text-4xl font-mono">{event?.title}</h1>
+        <h1 className="text-4xl font-mono px-3">{event?.title}</h1>
         <p>Evan. Obed Armando</p>
 
         <ImageCarousel />

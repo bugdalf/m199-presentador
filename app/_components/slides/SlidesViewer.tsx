@@ -69,7 +69,7 @@ export function SlidesViewer({ eventId = 'default', isLeader = false }: SlidesVi
           <span className="font-mono font-bold text-cyan-400">
             {currentSlide + 1} / {totalSlides}
           </span>
-          {currentSlideData && (
+          {currentSlideData && isLeader && (
             <span className="text-xs text-gray-400 hidden sm:inline">
               • {currentSlideData.fileName}
             </span>

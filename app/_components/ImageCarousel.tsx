@@ -19,7 +19,7 @@ export default function ImageCarousel() {
   return (
     <div className="flex justify-center p-4">
       <Carousel
-        className="w-full max-w-xs"
+        className="w-[calc(100%-6rem)] max-w-lg"
         opts={{loop: true}}
         plugins={[
           Autoplay({
