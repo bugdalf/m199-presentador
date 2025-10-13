@@ -5,21 +5,31 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
-import { Loader2, Save } from "lucide-react"
+import { Loader2, Save, MapPin } from "lucide-react"
 import { toast } from "sonner"
 
-interface Event {
+export interface Event {
   id?: string
-  nombre: string
-  fecha: string
-  lugar: string
+  title: string
+  rhema: string
+  rhemaQuote: string
+  nameEvent: string
+  date: string
+  time: string
+  place: string
+  mapsUrl: string
 }
 
 export function EventForm() {
   const [event, setEvent] = useState<Event>({
-    nombre: "",
-    fecha: "",
-    lugar: "",
+    title: "",
+    rhema: "",
+    rhemaQuote: "",
+    nameEvent: "",
+    date: "",
+    time: "",
+    place: "",
+    mapsUrl: "",
   })
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
@@ -50,8 +60,23 @@ export function EventForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (!event.nombre || !event.fecha || !event.lugar) {
+    if (
+      !event.title ||
+      !event.rhema ||
+      !event.rhemaQuote ||
+      !event.nameEvent ||
+      !event.date ||
+      !event.time ||
+      !event.place ||
+      !event.mapsUrl)
+    {
       toast.error("Todos los campos son requeridos")
+      return
+    }
+
+    // Validar URL de Google Maps
+    if (!isValidMapsUrl(event.mapsUrl)) {
+      toast.error("Por favor ingresa una URL válida de Google Maps")
       return
     }
 
@@ -88,6 +113,20 @@ export function EventForm() {
     }
   }
 
+  const isValidMapsUrl = (url: string): boolean => {
+    if (!url) return false // El campo es obligatorio
+    
+    // Validar que sea una URL de Google Maps
+    const mapsPatterns = [
+      /^https?:\/\/(www\.)?google\.[a-z]+\/maps/i,
+      /^https?:\/\/maps\.google\.[a-z]+/i,
+      /^https?:\/\/goo\.gl\/maps/i,
+      /^https?:\/\/maps\.app\.goo\.gl/i,
+    ]
+    
+    return mapsPatterns.some(pattern => pattern.test(url))
+  }
+
   const handleChange = (field: keyof Event, value: string) => {
     setEvent((prev) => ({
       ...prev,
@@ -121,36 +160,112 @@ export function EventForm() {
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="nombre">Nombre del Evento</Label>
+            <Label htmlFor="title">Título</Label>
             <Input
-              id="nombre"
-              placeholder="Ej: Conferencia Anual 2025"
-              value={event.nombre}
-              onChange={(e) => handleChange("nombre", e.target.value)}
+              id="title"
+              placeholder="Ej: Entrenamiento de evangelismo"
+              value={event.title}
+              onChange={(e) => handleChange("title", e.target.value)}
+              required
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="rhema">Rhema</Label>
+            <Input
+              id="rhema"
+              placeholder="Ej: Todo lo puedo en Cristo que me fortalece"
+              value={event.rhema}
+              onChange={(e) => handleChange("rhema", e.target.value)}
+              required
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="rhemaQuote">Pasaje bíblico del versículo rhema</Label>
+            <Input
+              id="rhemaQuote"
+              placeholder="Ej: Filipenses 4:13"
+              value={event.rhemaQuote}
+              onChange={(e) => handleChange("rhemaQuote", e.target.value)}
+              required
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="nameEvent">Nombre del Evento</Label>
+            <Input
+              id="nameEvent"
+              placeholder="Ej: Conferencia Anual 2025 - Cusco"
+              value={event.nameEvent}
+              onChange={(e) => handleChange("nameEvent", e.target.value)}
               required
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="fecha">Fecha</Label>
-            <Input
-              id="fecha"
-              type="date"
-              value={event.fecha}
-              onChange={(e) => handleChange("fecha", e.target.value)}
-              required
-            />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="date">Fecha</Label>
+              <Input
+                id="date"
+                type="date"
+                value={event.date}
+                onChange={(e) => handleChange("date", e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="time">Hora</Label>
+              <Input
+                id="time"
+                type="time"
+                value={event.time}
+                onChange={(e) => handleChange("time", e.target.value)}
+                required
+              />
+            </div>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="lugar">Lugar</Label>
+            <Label htmlFor="place">Lugar</Label>
             <Input
-              id="lugar"
+              id="place"
               placeholder="Ej: Centro de Convenciones, Lima"
-              value={event.lugar}
-              onChange={(e) => handleChange("lugar", e.target.value)}
+              value={event.place}
+              onChange={(e) => handleChange("place", e.target.value)}
               required
             />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="mapsUrl">
+              Ubicación en Google Maps
+            </Label>
+            <div className="relative">
+              <MapPin className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+              <Input
+                id="mapsUrl"
+                type="url"
+                placeholder="https://maps.google.com/..."
+                value={event.mapsUrl}
+                onChange={(e) => handleChange("mapsUrl", e.target.value)}
+                className="pl-10"
+                required
+              />
+            </div>
+            <p className="text-sm text-muted-foreground">
+              Pega el enlace de Google Maps del lugar del evento
+            </p>
+            {event.mapsUrl && (
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => window.open(event.mapsUrl, "_blank")}
+                className="mt-2"
+              >
+                <MapPin className="mr-2 h-4 w-4" />
+                Ver en Google Maps
+              </Button>
+            )}
           </div>
 
           <Button type="submit" className="w-full" disabled={saving}>

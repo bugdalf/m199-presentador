@@ -7,10 +7,13 @@ import InfoEvent from "./_components/InfoEvent";
 import TikTokEmbed from "./_components/TikTokEmbed";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "@/lib/firebase";
+import { Event } from "@/app/_components/event/EventForm";
+import Rhema from "./_components/Rhema";
 
 
 export default function Home() {
   const [user, setUser] = useState<User | null>(null)
+  const [event, setEvent] = useState<Event | null>(null)
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -23,6 +26,22 @@ export default function Home() {
     return () => unsubscribe()
   }, [])
 
+  useEffect(() => {
+    fetchEvent()
+  }, [])
+
+  const fetchEvent = async () => {
+    try {
+      const response = await fetch("/api/event")
+      const data = await response.json()
+
+      if (data.success && data.event) {
+        setEvent(data.event)
+      }
+    } catch (error) {
+      console.error("Error al cargar evento:", error)
+    }
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -31,15 +50,16 @@ export default function Home() {
           <span className="text-xs font-mono text-cyan-400">MODO LIDER</span>
         )}
         {/* hero */}
-        <h1 className="text-4xl font-mono">ENTRENAMIENTO DE EVANGELISMO</h1>
+        <h1 className="text-4xl font-mono">{event?.title}</h1>
         <p>Evan. Obed Armando</p>
 
         <ImageCarousel />
-        <Counter targetDate="2025-10-08T20:30:00" />
-        <InfoEvent targetDate="2025-10-08T20:30:00" />
+        <Counter targetDate={`${event?.date}T${event?.time}:00`} />
+        <InfoEvent targetDate={`${event?.date}T${event?.time}:00`} place={event?.place || ''} mapsUrl={event?.mapsUrl || ''} />
+        <Rhema rhema={event?.rhema || ''} rhemaQuote={event?.rhemaQuote || ''}/>
         <p className="text-center font-display">---</p>
         <p className="font-bold font-mono mt-8 mb-4">Más sobre nuestro ministerio</p>
-        <TikTokEmbed
+        {/* <TikTokEmbed
           videoId="7419263094586740011"
           username="evangelismo_sin_limites"
           description="RECURSOS PARA EVANGELIZAR. Los métodos cambian, pero la palabra jamás...!!!"
@@ -56,10 +76,9 @@ export default function Home() {
             'jovenescristianos',
             'llamado'
           ]}
-        />
+        /> */}
         <Contact />
       </section>
-
     </div>
   )
 }

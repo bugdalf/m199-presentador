@@ -1,4 +1,8 @@
-export default function InfoEvent({targetDate}: {targetDate: string}) {
+import { Button } from "@/components/ui/button";
+import { MapPin, PinIcon } from "lucide-react";
+import Link from "next/link";
+
+export default function InfoEvent({targetDate, place, mapsUrl}: {targetDate: string, place: string, mapsUrl: string}) {
   const date = new Date(targetDate);
   const day = date.getDate();
   const month = date.getMonth() + 1;
@@ -30,7 +34,10 @@ export default function InfoEvent({targetDate}: {targetDate: string}) {
       </div>
       <div>
         <p className="font-bold font-mono">Lugar</p>
-        <p>Auditorio Iglesia Vida - Cusco</p>
+        <p>{place}</p>
+        <Link href={mapsUrl} target="_blank">
+          <Button variant="outline" className="m-1 text-xs">Ver en Google Maps <MapPin /></Button>
+        </Link>
       </div>
     </div>
   );

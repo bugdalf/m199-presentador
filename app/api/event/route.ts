@@ -15,7 +15,7 @@ import {
 // GET - Obtener evento (asumiendo que solo hay uno)
 export async function GET() {
   try {
-    const eventsRef = collection(db, "events")
+    const eventsRef = collection(db, "event")
     const q = query(eventsRef, limit(1))
     const querySnapshot = await getDocs(q)
     
@@ -50,19 +50,24 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { nombre, fecha, lugar } = body
+    const { title, rhema, rhemaQuote, nameEvent, date, time, place, mapsUrl } = body
 
-    if (!nombre || !fecha || !lugar) {
+    if (!title || !rhema || !rhemaQuote || !nameEvent || !date || !time || !place || !mapsUrl) {
       return NextResponse.json(
         { error: "Todos los campos son requeridos" },
         { status: 400 }
       )
     }
 
-    const docRef = await addDoc(collection(db, "events"), {
-      nombre,
-      fecha,
-      lugar,
+    const docRef = await addDoc(collection(db, "event"), {
+      title,
+      rhema,
+      rhemaQuote,
+      nameEvent,
+      date,
+      time,
+      place,
+      mapsUrl,
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
     })
@@ -85,20 +90,25 @@ export async function POST(request: NextRequest) {
 export async function PUT(request: NextRequest) {
   try {
     const body = await request.json()
-    const { id, nombre, fecha, lugar } = body
+    const { id, title, rhema, rhemaQuote, nameEvent, date, time, place, mapsUrl } = body
 
-    if (!id || !nombre || !fecha || !lugar) {
+    if (!id || !title || !rhema || !rhemaQuote || !nameEvent || !date || !time || !place || !mapsUrl) {
       return NextResponse.json(
         { error: "Todos los campos son requeridos" },
         { status: 400 }
       )
     }
 
-    const docRef = doc(db, "events", id)
+    const docRef = doc(db, "event", id)
     await updateDoc(docRef, {
-      nombre,
-      fecha,
-      lugar,
+      title,
+      rhema,
+      rhemaQuote,
+      nameEvent,
+      date,
+      time,
+      place,
+      mapsUrl,
       updatedAt: serverTimestamp(),
     })
 

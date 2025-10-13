@@ -6,7 +6,7 @@ import { auth } from "@/lib/firebase"
 import { useFullscreen } from "@/hooks/use-fullscreen";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { PencilIcon, Presentation, PresentationIcon } from "lucide-react";
+import { PencilIcon, PresentationIcon } from "lucide-react";
 
 export default function Page() {
   const [user, setUser] = useState<User | null>(null);
@@ -59,6 +59,8 @@ export default function Page() {
         </div>
       )}
       <div className="border border-dashed w-full h-full">
+        {/* Aqui los slides */}
+        <span>aqui los slides</span>
       </div>
     </div>
   )
