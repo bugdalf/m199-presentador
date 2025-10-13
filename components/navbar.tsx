@@ -7,6 +7,7 @@ import { useEffect, useState } from "react"
 import { auth } from "@/lib/firebase"
 import { onAuthStateChanged, signOut } from "firebase/auth"
 import { useFullscreen } from "@/hooks/use-fullscreen"
+import { KeyRoundIcon, LogOutIcon } from "lucide-react"
 
 export function Navbar() {
   const router = useRouter();
@@ -33,7 +34,6 @@ export function Navbar() {
     <div>
       {!isFullscreen && (
         <nav className="flex justify-center py-1 px-6 relative">
-
           <Link href="/">
             <Button variant="link">INICIO</Button>
           </Link>
@@ -42,11 +42,11 @@ export function Navbar() {
           </Link>
           {isAuthenticated ? (
             <Button variant="outline" onClick={handleLogout} className="absolute right-2">
-              Cerrar Sesión
+              <LogOutIcon />
             </Button>
           ) : (
             <Link href="/login" className="absolute right-2">
-              <Button variant="outline">Iniciar Sesión</Button>
+              <Button variant="outline"><KeyRoundIcon /></Button>
             </Link>
           )}
         </nav>

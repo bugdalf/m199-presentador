@@ -7,6 +7,8 @@ import { useFullscreen } from "@/hooks/use-fullscreen";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { PencilIcon, PresentationIcon } from "lucide-react";
+import { SlidesViewer } from "../_components/slides/SlidesViewer";
+import { SlidesControls } from "../_components/slides/SlidesControls";
 
 export default function Page() {
   const [user, setUser] = useState<User | null>(null);
@@ -30,7 +32,7 @@ export default function Page() {
     return () => unsubscribe()
   }, [])
   return (
-    <div className="h-[calc(100vh-3rem)] flex flex-col items-center">
+    <div className="h-[calc(100vh5rem)] flex flex-col items-center">
       {user && (
         <>
           <span className="text-xs font-mono text-cyan-400">MODO LIDER</span>
@@ -38,8 +40,9 @@ export default function Page() {
             <Link href="/manage-slides">
               <Button variant='link'><PresentationIcon />Diapositivas</Button>
             </Link>
-            <div>
-              mandos principales
+            <div className="flex items-center gap-4">
+              <span className="text-xs text-gray-400 hidden sm:inline">Mandos principales</span>
+              <SlidesControls eventId="default" />
             </div>
             <Link href="/event">
               <Button variant='link'><PencilIcon />Evento</Button>
@@ -60,7 +63,7 @@ export default function Page() {
       )}
       <div className="border border-dashed w-full h-full">
         {/* Aqui los slides */}
-        <span>aqui los slides</span>
+        <SlidesViewer eventId="default" />
       </div>
     </div>
   )
