@@ -9,6 +9,7 @@ import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { Event } from "@/app/_components/event/EventForm";
 import Rhema from "./_components/Rhema";
+import VideoM199 from "./_components/VideoM199";
 
 
 export default function Home() {
@@ -59,6 +60,7 @@ export default function Home() {
         <Rhema rhema={event?.rhema || ''} rhemaQuote={event?.rhemaQuote || ''}/>
         <p className="text-center font-display">---</p>
         <p className="font-bold font-mono mt-8 mb-4">Más sobre nuestro ministerio</p>
+        <VideoM199 />
         {/* <TikTokEmbed
           videoId="7419263094586740011"
           username="evangelismo_sin_limites"
