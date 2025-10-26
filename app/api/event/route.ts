@@ -18,7 +18,7 @@ export async function GET() {
     const eventsRef = collection(db, "event")
     const q = query(eventsRef, limit(1))
     const querySnapshot = await getDocs(q)
-    
+
     if (querySnapshot.empty) {
       return NextResponse.json({
         success: true,
@@ -30,7 +30,6 @@ export async function GET() {
     const event = {
       id: eventDoc.id,
       ...eventDoc.data(),
-      fecha: eventDoc.data().fecha || null,
     }
 
     return NextResponse.json({

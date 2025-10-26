@@ -15,6 +15,7 @@ import VideoM199 from "./_components/VideoM199";
 export default function Home() {
   const [user, setUser] = useState<User | null>(null)
   const [event, setEvent] = useState<Event | null>(null)
+  const [isLoadingEvent, setIsLoadingEvent] = useState(true)
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -35,12 +36,14 @@ export default function Home() {
     try {
       const response = await fetch("/api/event")
       const data = await response.json()
-
+      console.log(data)
       if (data.success && data.event) {
         setEvent(data.event)
       }
     } catch (error) {
       console.error("Error al cargar evento:", error)
+    } finally {
+      setIsLoadingEvent(false)
     }
   }
 
@@ -50,35 +53,38 @@ export default function Home() {
         {user && (
           <span className="text-xs font-mono text-cyan-400">MODO LIDER</span>
         )}
+        
         {/* hero */}
-        <h1 className="text-4xl font-mono px-3">{event?.title}</h1>
+        <h1 className="text-4xl font-mono px-3">{event?.title || '...'}</h1>
         <p>Evan. Obed Armando</p>
 
         <ImageCarousel />
-        <Counter targetDate={`${event?.date}T${event?.time}:00`} />
-        <InfoEvent targetDate={`${event?.date}T${event?.time}:00`} place={event?.place || ''} mapsUrl={event?.mapsUrl || ''} />
-        <Rhema rhema={event?.rhema || ''} rhemaQuote={event?.rhemaQuote || ''}/>
+        
+        {/* Solo renderizar Counter cuando event esté cargado */}
+        {!isLoadingEvent && event?.date && event?.time ? (
+          <Counter targetDate={`${event.date}T${event.time}:00`} />
+        ) : (
+          <div className="text-center py-4">
+            <p className="font-bold font-mono">...</p>
+          </div>
+        )}
+        
+        {!isLoadingEvent && event?.date && event?.time && (
+          <InfoEvent 
+            targetDate={`${event.date}T${event.time}:00`} 
+            place={event?.place || ''} 
+            mapsUrl={event?.mapsUrl || ''} 
+          />
+        )}
+        
+        {event?.rhema && (
+          <Rhema rhema={event.rhema} rhemaQuote={event.rhemaQuote || ''}/>
+        )}
+        
         <p className="text-center font-display">---</p>
         <p className="font-bold font-mono mt-8 mb-4">Más sobre nuestro ministerio</p>
         <VideoM199 />
-        {/* <TikTokEmbed
-          videoId="7419263094586740011"
-          username="evangelismo_sin_limites"
-          description="RECURSOS PARA EVANGELIZAR. Los métodos cambian, pero la palabra jamás...!!!"
-          hashtags={[
-            'evangelsimocreativo',
-            'jovenesconproposito',
-            'evangelismosinlimitesoficial',
-            'evangelismoenlascalles',
-            'ftp',
-            'evangelismo',
-            'Dios',
-            'adoracioncristiana',
-            'iglesiacristiana',
-            'jovenescristianos',
-            'llamado'
-          ]}
-        /> */}
+        
         <Contact />
       </section>
     </div>
