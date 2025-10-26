@@ -38,7 +38,7 @@ export default function EventPage() {
     return null
   }
   return (
-    <div className="w-lg m-auto mt-12 p-2">
+    <div className="w-full max-w-lg m-auto mt-12 p-2">
       <EventForm />
     </div>
   );

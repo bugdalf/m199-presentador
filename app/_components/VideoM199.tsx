@@ -5,8 +5,9 @@ export default function VideoM199() {
   // Poster (thumbnail)
   const posterUrl = `https://res.cloudinary.com/df0zafgos/video/upload/so_2.0,q_auto,f_auto/video-presentacion_wnatyl.jpg`;
   return (
-    <div className='w-full flex justify-center p-0 m-0'>
+    <div className='w-full flex justify-center p-3 m-0'>
       <video
+        className="rounded-lg"
         width="400px"
         height="auto"
         controls
