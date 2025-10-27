@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import "@fontsource/bungee-shade"
 import "@fontsource/bungee"
 import "@fontsource/poppins"
@@ -11,6 +11,12 @@ export const metadata: Metadata = {
   description: 'misión 1-99 - presentación',
 }
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover", // 🔥 necesario para fullscreen en móviles
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -19,8 +25,10 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className="font-sans antialiased bg-black">
-        <Navbar />
-        {children}
+        <main className="min-h-screen bg-background text-foreground">
+          <Navbar />
+          {children}
+        </main>
         <Toaster />
       </body>
     </html>

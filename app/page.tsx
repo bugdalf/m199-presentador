@@ -53,13 +53,13 @@ export default function Home() {
         {user && (
           <span className="text-xs font-mono text-cyan-400">MODO LIDER</span>
         )}
-        
+
         {/* hero */}
         <h1 className="text-4xl font-mono px-3">{event?.title || '...'}</h1>
         <p>Evan. Obed Armando</p>
 
         <ImageCarousel />
-        
+
         {/* Solo renderizar Counter cuando event esté cargado */}
         {!isLoadingEvent && event?.date && event?.time ? (
           <Counter targetDate={`${event.date}T${event.time}:00`} />
@@ -68,23 +68,29 @@ export default function Home() {
             <p className="font-bold font-mono">...</p>
           </div>
         )}
-        
+
         {!isLoadingEvent && event?.date && event?.time && (
-          <InfoEvent 
-            targetDate={`${event.date}T${event.time}:00`} 
-            place={event?.place || ''} 
-            mapsUrl={event?.mapsUrl || ''} 
+          <InfoEvent
+            targetDate={`${event.date}T${event.time}:00`}
+            place={event?.place || ''}
+            mapsUrl={event?.mapsUrl || ''}
           />
         )}
-        
+
         {event?.rhema && (
-          <Rhema rhema={event.rhema} rhemaQuote={event.rhemaQuote || ''}/>
+          <Rhema rhema={event.rhema} rhemaQuote={event.rhemaQuote || ''} />
         )}
-        
-        <p className="text-center font-display">---</p>
-        <p className="font-bold font-mono mt-8 mb-4">Más sobre nuestro ministerio</p>
+
+        <p className="text-center my-6">{event?.nameEvent}</p>
+        <p className="text-center font-display my-6">---</p>
+        {/* <p className="font-bold font-mono text-stroke-white scale-85">Más sobre nuestro ministerio</p>
+        <p className="font-bold font-mono text-stroke-white -mt-4.5 scale-90">Más sobre nuestro ministerio</p>
+        <p className="font-bold font-mono text-stroke-white -mt-4.5 scale-95">Más sobre nuestro ministerio</p>
+        <p className="font-bold font-mono text-stroke-white -mt-4.5 scale-100">Más sobre nuestro ministerio</p>
+        <p className="font-bold font-mono text-stroke-white -mt-4.5 scale-105">Más sobre nuestro ministerio</p> */}
+        <p className="font-bold font-mono mb-4 -mt-4" style={{WebkitTextStroke: '1px #ff1d8d', WebkitTextFillColor: 'transparent'}}>Más sobre nuestro ministerio</p>
         <VideoM199 />
-        
+
         <Contact />
       </section>
     </div>

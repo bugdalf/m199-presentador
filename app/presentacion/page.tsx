@@ -33,7 +33,7 @@ export default function Page() {
   }, [])
 
   return (
-    <div className="h-full flex flex-col items-center">
+    <div className="h-fit w-full flex flex-col items-center">
       {user && (
         <>
           <span className="text-xs font-mono text-cyan-400">MODO LIDER</span>
@@ -61,7 +61,7 @@ export default function Page() {
           <span className='md:hidden text-xs text-gray-400 mt-1'>*Gira tu celular*</span>
         </div>
       )}
-      <div className="border border-dashed w-full h-full max-h-screen">
+      <div className="w-full h-full md:px-20 relative">
         <SlidesViewer eventId="default" isLeader={!!user} />
       </div>
     </div>

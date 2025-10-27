@@ -120,11 +120,31 @@
   * {
     @apply border-border outline-ring/50;
   }
+
+  html, body {
+    @apply h-full m-0 p-0 bg-background text-foreground;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  main {
+    @apply min-h-screen;
   }
 
   button {
     cursor: pointer;
+  }
+}
+
+@layer utilities {
+  .text-stroke {
+    -webkit-text-stroke: .3px black;
+    -webkit-text-fill-color: transparent;
+  }
+  .text-stroke-white {
+    -webkit-text-stroke: .3px white;
+    -webkit-text-fill-color: black;
   }
 }

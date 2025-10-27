@@ -55,7 +55,7 @@ export function SlideItem({ slide }: SlideItemProps) {
   }
 
   return (
-    <div className="w-full h-full max-h-screen flex items-center justify-center bg-black relative">
+    <div className="w-full h-full flex items-center justify-center relative border border-dashed border-white rounded-lg overflow-hidden">
       {isLoading && (
         <div className="absolute inset-0 flex items-center justify-center bg-gray-900">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400"></div>
@@ -64,7 +64,7 @@ export function SlideItem({ slide }: SlideItemProps) {
       <img
         src={slide.url}
         alt={slide.fileName}
-        className="w-full h-full max-h-screen object-cover"
+        className="w-full max-h-[calc(100dvh-0.5rem)] object-contain"
         onLoad={() => setIsLoading(false)}
         onError={() => {
           setImageError(true);

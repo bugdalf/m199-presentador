@@ -57,14 +57,14 @@ export function SlidesViewer({ eventId = 'default', isLeader = false }: SlidesVi
   const currentSlideData = slides[currentSlide];
 
   return (
-    <div className="w-full h-full relative bg-black">
+    <div className="w-full h-full bg-black">
       {/* Slide actual */}
       {currentSlideData && (
         <SlideItem slide={currentSlideData} />
       )}
 
       {/* Indicador de slide */}
-      <div className="absolute top-4 left-4 bg-black/70 backdrop-blur-sm px-4 py-2 rounded-lg text-sm text-white border border-cyan-400/30">
+      <div className="absolute top-4 left-1 bg-black/70 backdrop-blur-sm px-4 py-2 rounded-lg text-sm text-white border border-cyan-400/30">
         <div className="flex items-center gap-2">
           <span className="font-mono font-bold text-cyan-400">
             {currentSlide + 1} / {totalSlides}
