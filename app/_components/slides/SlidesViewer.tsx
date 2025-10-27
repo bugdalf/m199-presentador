@@ -24,7 +24,7 @@ export function SlidesViewer({ eventId = 'default', isLeader = false }: SlidesVi
 
   if (slidesLoading || syncLoading) {
     return (
-      <div className="w-full h-full flex items-center justify-center bg-gray-900">
+      <div className="w-full h-full max-h-screen flex items-center justify-center bg-gray-900">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400 mx-auto mb-4"></div>
           <p className="text-sm text-gray-400">Cargando presentación...</p>
@@ -64,7 +64,7 @@ export function SlidesViewer({ eventId = 'default', isLeader = false }: SlidesVi
       )}
 
       {/* Indicador de slide */}
-      <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-sm px-4 py-2 rounded-lg text-sm text-white border border-cyan-400/30">
+      <div className="absolute top-4 left-4 bg-black/70 backdrop-blur-sm px-4 py-2 rounded-lg text-sm text-white border border-cyan-400/30">
         <div className="flex items-center gap-2">
           <span className="font-mono font-bold text-cyan-400">
             {currentSlide + 1} / {totalSlides}
