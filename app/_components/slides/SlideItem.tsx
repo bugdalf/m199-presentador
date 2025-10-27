@@ -15,10 +15,18 @@ function extractYouTubeVideoId(url: string): string | null {
     if (urlObj.hostname.includes('youtube.com') && urlObj.searchParams.has('v')) {
       return urlObj.searchParams.get('v');
     }
-    
+
+    // Para URLs del tipo: https://youtube.com/shorts/VIDEO_ID
+    if (urlObj.hostname.includes('youtube.com') && urlObj.pathname.startsWith('/shorts/')) {
+      // Extraer el ID después de /shorts/ y antes de cualquier parámetro
+      const pathParts = urlObj.pathname.split('/');
+      const videoId = pathParts[2]; // /shorts/VIDEO_ID
+      return videoId || null;
+    }
+
     // Para URLs del tipo: https://youtu.be/VIDEO_ID
     if (urlObj.hostname === 'youtu.be') {
-      return urlObj.pathname.slice(1);
+      return urlObj.pathname.slice(1).split('?')[0]; // Remover cualquier query param
     }
     
     return null;
