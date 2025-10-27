@@ -4,6 +4,7 @@ import "@fontsource/bungee"
 import "@fontsource/poppins"
 import '../styles/globals.css'
 import { Navbar } from '@/components/navbar'
+import { Toaster } from 'sonner'
 
 export const metadata: Metadata = {
   title: 'misión 1-99 - presentación',
@@ -20,6 +21,7 @@ export default function RootLayout({
       <body className="font-sans antialiased bg-black">
         <Navbar />
         {children}
+        <Toaster />
       </body>
     </html>
   )

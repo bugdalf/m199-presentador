@@ -68,8 +68,7 @@ export function EventForm() {
       !event.date ||
       !event.time ||
       !event.place ||
-      !event.mapsUrl)
-    {
+      !event.mapsUrl) {
       toast.error("Todos los campos son requeridos")
       return
     }
@@ -106,7 +105,6 @@ export function EventForm() {
         toast.error(data.error || "Error al guardar el evento")
       }
     } catch (error) {
-      console.error("Error al guardar evento:", error)
       toast.error("Error al guardar el evento")
     } finally {
       setSaving(false)
@@ -115,7 +113,7 @@ export function EventForm() {
 
   const isValidMapsUrl = (url: string): boolean => {
     if (!url) return false // El campo es obligatorio
-    
+
     // Validar que sea una URL de Google Maps
     const mapsPatterns = [
       /^https?:\/\/(www\.)?google\.[a-z]+\/maps/i,
@@ -123,7 +121,7 @@ export function EventForm() {
       /^https?:\/\/goo\.gl\/maps/i,
       /^https?:\/\/maps\.app\.goo\.gl/i,
     ]
-    
+
     return mapsPatterns.some(pattern => pattern.test(url))
   }
 

@@ -4,7 +4,7 @@ import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
 export interface Slide {
-  id: string;
+  id?: string;
   fileName: string;
   fileSize: number;
   fileType: string;
@@ -12,6 +12,7 @@ export interface Slide {
   publicId: string;
   uploadedAt: any;
   url: string;
+  videoUrl?: string;
 }
 
 export function useFirestoreSlides() {

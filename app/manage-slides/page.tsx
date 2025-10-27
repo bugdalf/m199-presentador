@@ -43,7 +43,7 @@ export default function ManageSlidesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background py-4 px-12 flex flex-col gap-2">
+    <div className="min-h-screen bg-background p-4 lg:px-20 flex flex-col gap-2">
       <h1 className="text-2xl font-bold tracking-tight">Gestionar diapositivas de la presentación</h1>
       <ImageUploader onUploadSuccess={handleUploadSuccess} />
       <ImageGallery refresh={refreshKey} />
