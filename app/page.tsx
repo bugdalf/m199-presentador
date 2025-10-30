@@ -36,7 +36,6 @@ export default function Home() {
     try {
       const response = await fetch("/api/event")
       const data = await response.json()
-      console.log(data)
       if (data.success && data.event) {
         setEvent(data.event)
       }
@@ -88,8 +87,13 @@ export default function Home() {
         <p className="font-bold font-mono text-stroke-white -mt-4.5 scale-95">Más sobre nuestro ministerio</p>
         <p className="font-bold font-mono text-stroke-white -mt-4.5 scale-100">Más sobre nuestro ministerio</p>
         <p className="font-bold font-mono text-stroke-white -mt-4.5 scale-105">Más sobre nuestro ministerio</p> */}
-        <p className="font-bold font-mono mb-4 -mt-4" style={{WebkitTextStroke: '1px #ff1d8d', WebkitTextFillColor: 'transparent'}}>Más sobre nuestro ministerio</p>
-        <VideoM199 />
+        <p className="font-bold font-mono mb-4 -mt-4 text-xl">Más sobre nuestro ministerio</p>
+        {/* <VideoM199 /> */}
+        <div className="flex justify-center">
+          <TikTokEmbed
+            url="https://www.tiktok.com/@evangelismo_sin_limites/video/7419263094586740011?is_from_webapp=1&sender_device=pc&web_id=7558621790777722386"
+          />
+        </div>
 
         <Contact />
       </section>
