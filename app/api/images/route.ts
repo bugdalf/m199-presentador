@@ -11,7 +11,7 @@ export async function GET() {
     const q = query(
       slidesRef,
       orderBy("order", "asc"),
-      limit(30)
+      limit(200)
     )
     
     // Ejecutar la consulta
