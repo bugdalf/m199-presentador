@@ -26,13 +26,13 @@ export default function Contact() {
         </div>
         <div className='flex flex-col justify-center gap-2'>
           <div className='flex justify-center items-center gap-2'>Promotor: Ps. Henry Hinojosa -
-            <Link href="https://wa.me/950409839?text=Hola%20somos%20Evangelismo%20sin%20L%C3%ADmites%20misi%C3%B3n%201-99%2C%20en%20que%20podemos%20ayudarte%20" target="_blank" rel="noopener noreferrer" aria-label="Whatsapp" className='flex gap-2'>
+            <Link href="https://wa.me/+51950409839?text=Hola%20somos%20Evangelismo%20sin%20L%C3%ADmites%20misi%C3%B3n%201-99%2C%20en%20que%20podemos%20ayudarte%20" target="_blank" rel="noopener noreferrer" aria-label="Whatsapp" className='flex gap-2'>
               <FaWhatsapp size={24} color="#ffffff" />
               950409839
             </Link>
           </div>
           <div className='flex justify-center items-center gap-2'>Director: Ld. Obed Armando -
-            <Link href="https://wa.me/934778965?text=Hola%20somos%20Evangelismo%20sin%20L%C3%ADmites%20misi%C3%B3n%201-99%2C%20en%20que%20podemos%20ayudarte%20" target="_blank" rel="noopener noreferrer" aria-label="Whatsapp" className='flex gap-2'>
+            <Link href="https://wa.me/+51934778965?text=Hola%20somos%20Evangelismo%20sin%20L%C3%ADmites%20misi%C3%B3n%201-99%2C%20en%20que%20podemos%20ayudarte%20" target="_blank" rel="noopener noreferrer" aria-label="Whatsapp" className='flex gap-2'>
               <FaWhatsapp size={24} color="#ffffff" />
               934778965
             </Link>
