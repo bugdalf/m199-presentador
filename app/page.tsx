@@ -4,12 +4,11 @@ import Contact from "./components/Contact";
 import Counter from "./components/Counter";
 import ImageCarousel from "./components/ImageCarousel";
 import InfoEvent from "./components/InfoEvent";
-import TikTokEmbed from "./components/TikTokEmbed";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { Event } from "@/app/components/event/EventForm";
 import Rhema from "./components/Rhema";
-import VideoM199 from "./components/VideoM199";
+import YoutubeShortEmbed from "./components/YoutubeShortEmbed";
 
 
 export default function Home() {
@@ -85,11 +84,8 @@ export default function Home() {
         <p className="font-bold font-mono mb-4 -mt-4 text-xl">Más sobre nuestro ministerio</p>
         {/* <VideoM199 /> */}
         <div className="flex justify-center">
-          <TikTokEmbed
-            url={event?.tiktokVideo || 'https://www.tiktok.com/@evangelismo_sin_limites/video/7091234567890123456'}
-          />
+          <YoutubeShortEmbed url={event?.tiktokVideo || ""} />
         </div>
-
         <Contact />
       </section>
     </div>

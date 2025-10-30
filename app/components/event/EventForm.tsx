@@ -238,10 +238,10 @@ export function EventForm() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="tiktok-video">Video de tiktok</Label>
+            <Label htmlFor="tiktok-video">Video de portada</Label>
             <Input
               id="tiktok-video"
-              placeholder="Ej: https://www.tiktok.com/@evangelismo_sin_limites/video..."
+              placeholder="Ej: https://www.youtube.com/shorts..."
               value={event.tiktokVideo}
               onChange={(e) => handleChange("tiktokVideo", e.target.value)}
               required
