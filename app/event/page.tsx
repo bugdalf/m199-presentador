@@ -1,6 +1,6 @@
 "use client"
 
-import { EventForm } from "@/app/_components/event/EventForm"
+import { EventForm } from "@/app/components/event/EventForm"
 import { useEffect } from "react"
 import { onAuthStateChanged } from "firebase/auth"
 import { auth } from "@/lib/firebase"

@@ -1,15 +1,15 @@
 "use client"
 import { useEffect, useState } from "react";
-import Contact from "./_components/Contact";
-import Counter from "./_components/Counter";
-import ImageCarousel from "./_components/ImageCarousel";
-import InfoEvent from "./_components/InfoEvent";
-import TikTokEmbed from "./_components/TikTokEmbed";
+import Contact from "./components/Contact";
+import Counter from "./components/Counter";
+import ImageCarousel from "./components/ImageCarousel";
+import InfoEvent from "./components/InfoEvent";
+import TikTokEmbed from "./components/TikTokEmbed";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "@/lib/firebase";
-import { Event } from "@/app/_components/event/EventForm";
-import Rhema from "./_components/Rhema";
-import VideoM199 from "./_components/VideoM199";
+import { Event } from "@/app/components/event/EventForm";
+import Rhema from "./components/Rhema";
+import VideoM199 from "./components/VideoM199";
 
 
 export default function Home() {

@@ -1,8 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { ImageUploader } from "../_components/manage-slides/ImageUploader"
-import { ImageGallery } from "../_components/manage-slides/ImageGallery"
+import { ImageUploader } from "../components/manage-slides/ImageUploader"
+import { ImageGallery } from "../components/manage-slides/ImageGallery"
 import { auth } from "@/lib/firebase"
 import { onAuthStateChanged, User } from "firebase/auth"
 import router from "next/router"
