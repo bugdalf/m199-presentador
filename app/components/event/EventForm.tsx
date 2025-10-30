@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { Loader2, Save, MapPin } from "lucide-react"
 import { toast } from "sonner"
+import { Textarea } from "@/components/ui/textarea"
 
 export interface Event {
   id?: string
@@ -17,6 +18,7 @@ export interface Event {
   date: string
   time: string
   place: string
+  tiktokVideo: string
   mapsUrl: string
 }
 
@@ -29,6 +31,7 @@ export function EventForm() {
     date: "",
     time: "",
     place: "",
+    tiktokVideo: "",
     mapsUrl: "",
   })
   const [loading, setLoading] = useState(true)
@@ -68,6 +71,7 @@ export function EventForm() {
       !event.date ||
       !event.time ||
       !event.place ||
+      !event.tiktokVideo ||
       !event.mapsUrl) {
       toast.error("Todos los campos son requeridos")
       return
@@ -169,7 +173,7 @@ export function EventForm() {
           </div>
           <div className="space-y-2">
             <Label htmlFor="rhema">Rhema</Label>
-            <Input
+            <Textarea
               id="rhema"
               placeholder="Ej: Todo lo puedo en Cristo que me fortalece"
               value={event.rhema}
@@ -229,6 +233,17 @@ export function EventForm() {
               placeholder="Ej: Centro de Convenciones, Lima"
               value={event.place}
               onChange={(e) => handleChange("place", e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="tiktok-video">Video de tiktok</Label>
+            <Input
+              id="tiktok-video"
+              placeholder="Ej: https://www.tiktok.com/@evangelismo_sin_limites/video..."
+              value={event.tiktokVideo}
+              onChange={(e) => handleChange("tiktokVideo", e.target.value)}
               required
             />
           </div>

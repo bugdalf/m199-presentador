@@ -82,16 +82,11 @@ export default function Home() {
 
         <p className="text-center my-6">{event?.nameEvent}</p>
         <p className="text-center font-display my-6">---</p>
-        {/* <p className="font-bold font-mono text-stroke-white scale-85">Más sobre nuestro ministerio</p>
-        <p className="font-bold font-mono text-stroke-white -mt-4.5 scale-90">Más sobre nuestro ministerio</p>
-        <p className="font-bold font-mono text-stroke-white -mt-4.5 scale-95">Más sobre nuestro ministerio</p>
-        <p className="font-bold font-mono text-stroke-white -mt-4.5 scale-100">Más sobre nuestro ministerio</p>
-        <p className="font-bold font-mono text-stroke-white -mt-4.5 scale-105">Más sobre nuestro ministerio</p> */}
         <p className="font-bold font-mono mb-4 -mt-4 text-xl">Más sobre nuestro ministerio</p>
         {/* <VideoM199 /> */}
         <div className="flex justify-center">
           <TikTokEmbed
-            url="https://www.tiktok.com/@evangelismo_sin_limites/video/7419263094586740011?is_from_webapp=1&sender_device=pc&web_id=7558621790777722386"
+            url={event?.tiktokVideo || 'https://www.tiktok.com/@evangelismo_sin_limites/video/7091234567890123456'}
           />
         </div>
 

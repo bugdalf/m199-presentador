@@ -89,9 +89,9 @@ export async function POST(request: NextRequest) {
 export async function PUT(request: NextRequest) {
   try {
     const body = await request.json()
-    const { id, title, rhema, rhemaQuote, nameEvent, date, time, place, mapsUrl } = body
+    const { id, title, rhema, rhemaQuote, nameEvent, date, time, place, tiktokVideo, mapsUrl } = body
 
-    if (!id || !title || !rhema || !rhemaQuote || !nameEvent || !date || !time || !place || !mapsUrl) {
+    if (!id || !title || !rhema || !rhemaQuote || !nameEvent || !date || !time || !place || !tiktokVideo || !mapsUrl) {
       return NextResponse.json(
         { error: "Todos los campos son requeridos" },
         { status: 400 }
@@ -107,6 +107,7 @@ export async function PUT(request: NextRequest) {
       date,
       time,
       place,
+      tiktokVideo,
       mapsUrl,
       updatedAt: serverTimestamp(),
     })
