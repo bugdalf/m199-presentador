@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import "@fontsource/bungee-shade"
 import "@fontsource/bungee"
 import "@fontsource/poppins"
-import '../styles/globals.css'
+import "../../styles/globals.css"
 import { Navbar } from '@/components/navbar'
 import { Toaster } from 'sonner'
 

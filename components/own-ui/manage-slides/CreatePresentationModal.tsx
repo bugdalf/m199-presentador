@@ -4,10 +4,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useEffect, useState } from "react";
-import { Presentation } from "./PresentationList";
-import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { Presentation } from "@/shared/ui-types";
 
 interface CreatePresentationModalProps {
   open: boolean;
