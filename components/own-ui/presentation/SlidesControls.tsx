@@ -1,4 +1,3 @@
-// components/slides-controls.tsx
 "use client"
 
 import { useSlides } from "@/hooks/use-slides";
@@ -12,13 +11,13 @@ interface SlidesControlsProps {
 }
 
 export function SlidesControls({ eventId = 'default', isLeader = false }: SlidesControlsProps) {
-  const { 
-    currentSlide, 
-    totalSlides, 
-    nextSlide, 
-    prevSlide, 
+  const {
+    currentSlide,
+    totalSlides,
+    nextSlide,
+    prevSlide,
     resetSlides,
-    goToSlide 
+    goToSlide
   } = useSlides(eventId, isLeader);
 
   // Manejo de teclas de flecha
@@ -35,7 +34,7 @@ export function SlidesControls({ eventId = 'default', isLeader = false }: Slides
 
   return (
     <div className="flex items-center gap-2">
-      <Button 
+      <Button
         onClick={resetSlides}
         variant="outline"
         size="sm"
@@ -43,8 +42,8 @@ export function SlidesControls({ eventId = 'default', isLeader = false }: Slides
       >
         <RotateCcwIcon className="w-4 h-4" />
       </Button>
-      
-      <Button 
+
+      <Button
         onClick={prevSlide}
         disabled={currentSlide === 0}
         variant="outline"
@@ -58,7 +57,7 @@ export function SlidesControls({ eventId = 'default', isLeader = false }: Slides
         {currentSlide + 1} / {totalSlides}
       </div>
 
-      <Button 
+      <Button
         onClick={nextSlide}
         disabled={currentSlide >= totalSlides - 1}
         variant="outline"

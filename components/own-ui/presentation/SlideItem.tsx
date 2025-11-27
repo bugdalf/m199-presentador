@@ -1,5 +1,5 @@
 "use client"
-import { Slide } from "@/hooks/use-firestore-slides";
+import { Slide } from "@/shared/ui-types";
 import { useState } from "react";
 
 interface SlideItemProps {
@@ -10,7 +10,7 @@ interface SlideItemProps {
 function extractYouTubeVideoId(url: string): string | null {
   try {
     const urlObj = new URL(url);
-    
+
     // Para URLs del tipo: https://www.youtube.com/watch?v=VIDEO_ID
     if (urlObj.hostname.includes('youtube.com') && urlObj.searchParams.has('v')) {
       return urlObj.searchParams.get('v');
@@ -28,7 +28,7 @@ function extractYouTubeVideoId(url: string): string | null {
     if (urlObj.hostname === 'youtu.be') {
       return urlObj.pathname.slice(1).split('?')[0]; // Remover cualquier query param
     }
-    
+
     return null;
   } catch (error) {
     console.error('Error al extraer videoId:', error);
@@ -39,7 +39,7 @@ function extractYouTubeVideoId(url: string): string | null {
 export function SlideItem({ slide }: SlideItemProps) {
   const [imageError, setImageError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  
+
   // Extraer el videoId de la URL
   const videoId = slide.videoUrl ? extractYouTubeVideoId(slide.videoUrl) : null;
 

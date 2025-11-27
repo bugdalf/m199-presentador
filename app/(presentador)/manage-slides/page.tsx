@@ -4,15 +4,12 @@ import { useEffect, useState } from "react"
 import { auth } from "@/lib/firebase"
 import { onAuthStateChanged, User } from "firebase/auth"
 import router from "next/router"
-import PresentationList from "../components/manage-slides/PresentationList"
+import PresentationList from "@/components/own-ui/manage-slides/PresentationList"
 
 
 export default function ManageSlidesPage() {
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
-  const [refreshKey, setRefreshKey] = useState(0)
-
-
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {

@@ -7,8 +7,8 @@ import { useFullscreen } from "@/hooks/use-fullscreen";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { PencilIcon, PresentationIcon } from "lucide-react";
-import { SlidesViewer } from "@/app/components/slides/SlidesViewer";
-import { SlidesControls } from "@/app/components/slides/SlidesControls";
+import { SlidesViewer } from "@/components/own-ui/presentation/SlidesViewer";
+import { SlidesControls } from "@/components/own-ui/presentation/SlidesControls";
 
 export default function Page() {
   const [user, setUser] = useState<User | null>(null);

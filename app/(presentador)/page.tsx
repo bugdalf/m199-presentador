@@ -1,14 +1,15 @@
 "use client"
 import { useEffect, useState } from "react";
-import Contact from "./components/Contact";
-import Counter from "./components/Counter";
-import ImageCarousel from "./components/ImageCarousel";
-import InfoEvent from "./components/InfoEvent";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "@/lib/firebase";
-import { Event } from "@/app/components/event/EventForm";
-import Rhema from "./components/Rhema";
-import YoutubeShortEmbed from "./components/YoutubeShortEmbed";
+import { Event } from "@/components/own-ui/event/EventForm";
+import ImageCarousel from "@/components/own-ui/ImageCarousel";
+import Counter from "@/components/own-ui/Counter";
+import InfoEvent from "@/components/own-ui/InfoEvent";
+import Rhema from "@/components/own-ui/Rhema";
+import YoutubeShortEmbed from "@/components/own-ui/YoutubeShortEmbed";
+import Contact from "@/components/own-ui/Contact";
+
 
 
 export default function Home() {

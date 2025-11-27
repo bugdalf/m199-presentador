@@ -1,34 +1,33 @@
 import { type NextRequest, NextResponse } from "next/server"
 import cloudinary from "@/lib/cloudinary"
 import { db } from "@/lib/firebase"
-import { doc, deleteDoc, getDoc } from "firebase/firestore"
+import { doc, deleteDoc, getDoc, updateDoc } from "firebase/firestore"
 
 export async function DELETE(request: NextRequest) {
   try {
     // Obtener el ID del documento desde el body o query params
     const body = await request.json()
-    const { firestoreId } = body
+    const { slideId, slidePublicId, presentationId } = body
 
-    if (!firestoreId) {
+    if (!slideId || !presentationId) {
       return NextResponse.json(
-        { error: "No se proporcionó el ID del documento" },
+        { error: "No se proporcionó la información necesaria" },
         { status: 400 }
       )
     }
 
-    // Obtener el documento de Firebase para acceder al publicId
-    const docRef = doc(db, "slides", firestoreId)
-    const docSnap = await getDoc(docRef)
+    const presentationRef = doc(db, "presentations", presentationId);
+    const snapshotPresentation = await getDoc(presentationRef);
 
-    if (!docSnap.exists()) {
+    if (!snapshotPresentation.exists()) {
       return NextResponse.json(
-        { error: "Documento no encontrado en Firebase" },
+        { error: "Presentación no encontrada" },
         { status: 404 }
       )
     }
 
-    const data = docSnap.data()
-    const publicId = data.publicId
+    const presentationData = snapshotPresentation.data()
+    const publicId = slidePublicId
 
     // Eliminar de Cloudinary
     let cloudinaryDeleted = false
@@ -42,8 +41,10 @@ export async function DELETE(request: NextRequest) {
       }
     }
 
-    // Eliminar de Firebase
-    await deleteDoc(docRef)
+    const newSlides = (presentationData.slides || []).filter((slide: any) => slide.id !== slideId);
+
+    // Actualizar el documento en Firebase
+    await updateDoc(presentationRef, { slides: newSlides });
 
     return NextResponse.json({
       success: true,

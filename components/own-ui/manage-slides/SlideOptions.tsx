@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slide } from "@/hooks/use-firestore-slides";
 import { Loader2, SaveIcon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 
 interface SlideOptionsProps {
@@ -20,8 +20,8 @@ interface SlideOptionsProps {
   onOpen: (isOpen: boolean) => void;
   slide?: Slide;
   onChangeSlide: React.Dispatch<React.SetStateAction<Slide>>;
-  slides: Slide[];
   setSlides: React.Dispatch<React.SetStateAction<Slide[]>>
+  presentationId: string
 }
 
 export default function SlideOptions({
@@ -29,14 +29,13 @@ export default function SlideOptions({
   onOpen,
   slide,
   onChangeSlide,
-  slides,
-  setSlides
+  setSlides,
+  presentationId
 }: SlideOptionsProps) {
   const [saving, setSaving] = useState(false)
 
-  useEffect(() => {
-    if (!open || !slide) return;
-  }, [open, slide]);
+  if (!open || !slide) return;
+
 
   // Actualizar la url del video
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -56,17 +55,19 @@ export default function SlideOptions({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(slide),
+        body: JSON.stringify({
+          ...slide,
+          presentationId
+        }),
       })
 
       const data = await response.json()
 
       if (data.success) {
         toast.success('Diapositiva actualizada correctamente')
-        
         // Actualizar el slide específico en el array de slides
-        setSlides(prevSlides => 
-          prevSlides.map(s => 
+        setSlides(prevSlides =>
+          prevSlides.map(s =>
             s.id === slide?.id ? { ...s, videoUrl: slide?.videoUrl || "" } : s
           )
         )

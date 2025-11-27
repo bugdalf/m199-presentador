@@ -110,6 +110,7 @@ export async function PUT(request: NextRequest) {
       presentation: {
         id,
         name,
+        isActive,
         updatedAt: serverTimestamp(),
       },
     })

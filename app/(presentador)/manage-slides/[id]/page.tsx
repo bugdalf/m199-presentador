@@ -1,6 +1,6 @@
 'use client'
-import { ImageGallery } from "@/app/components/manage-slides/ImageGallery"
-import { ImageUploader } from "@/app/components/manage-slides/ImageUploader"
+import { ImageGallery } from "@/components/own-ui/manage-slides/ImageGallery"
+import { ImageUploader } from "@/components/own-ui/manage-slides/ImageUploader"
 import { useParams } from "next/navigation"
 import { useState } from "react"
 

@@ -4,8 +4,9 @@ import { Button } from "@/components/ui/button"
 import { useEffect, useState } from "react"
 import CreatePresentationModal from "./CreatePresentationModal"
 import { Loader2Icon, PencilIcon, PresentationIcon, TrashIcon } from "lucide-react";
-import { Slide } from "@/hooks/use-firestore-slides";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { Slide } from "@/shared/ui-types";
 
 export interface Presentation {
   id?: string
@@ -116,23 +117,26 @@ export default function PresentationList() {
             <Loader2Icon className="animate-spin" />
           </div>
         ) : (
-          presentations.map(presentation => (
-            <div
-              key={presentation.id}
-              className="flex justify-between items-center border border-dashed rounded p-2"
-            >
-              <h2>{presentation.name}</h2>
-              <div className="flex gap-2">
-                <Button>
-                  <Link href={`/manage-slides/${presentation.id}`}>
-                    <PresentationIcon />
-                  </Link>
-                </Button>
-                <Button onClick={() => handleDeletePresentation(presentation)}><TrashIcon /></Button>
-                <Button onClick={() => handleEditPresentation(presentation)}><PencilIcon /></Button>
+          presentations.map(presentation => {
+            return (
+              <div
+                key={presentation.id}
+                className="flex justify-between items-center border border-dashed rounded p-2"
+              >
+                <h2>{presentation.name}</h2>
+                <div className="flex gap-2">
+                  <div className={cn("text-xs text-white rounded border flex items-center justify-center px-2", presentation.isActive === true && 'bg-cyan-500')}>{presentation.isActive ? 'Activo' : 'Inactivo'}</div>
+                  <Button variant='link'>
+                    <Link href={`/manage-slides/${presentation.id}`}>
+                      <PresentationIcon />
+                    </Link>
+                  </Button>
+                  <Button onClick={() => handleDeletePresentation(presentation)}><TrashIcon /></Button>
+                  <Button onClick={() => handleEditPresentation(presentation)}><PencilIcon /></Button>
+                </div>
               </div>
-            </div>
-          ))
+            );
+          })
         )}
       </div>
       <CreatePresentationModal

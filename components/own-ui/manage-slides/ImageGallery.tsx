@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 
 import { toast } from "sonner"
 import SlideOptions from "./SlideOptions"
-import { Slide } from "@/hooks/use-firestore-slides"
+import { Slide } from "@/shared/ui-types"
 import Link from "next/link"
 import { FaYoutube } from "react-icons/fa"
 
@@ -33,7 +33,7 @@ export function ImageGallery({ refresh, presentationId }: { refresh: number, pre
     const fetchImages = async () => {
       setLoading(true)
       try {
-        const response = await fetch("/api/images", {
+        const response = await fetch(`/api/images?presentationId=${presentationId}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -55,7 +55,7 @@ export function ImageGallery({ refresh, presentationId }: { refresh: number, pre
     fetchImages()
   }, [refresh])
 
-  const handleDelete = async (slideId: string | undefined, fileName: string) => {
+  const handleDelete = async (slideId: string | undefined, fileName: string, slidePublicId: string) => {
     if (!slideId) {
       return;
     }
@@ -73,7 +73,7 @@ export function ImageGallery({ refresh, presentationId }: { refresh: number, pre
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ firestoreId: slideId }),
+        body: JSON.stringify({ slideId, slidePublicId, presentationId }),
       })
 
       const data = await response.json()
@@ -162,7 +162,7 @@ export function ImageGallery({ refresh, presentationId }: { refresh: number, pre
                       <Button
                         variant="destructive"
                         size="icon"
-                        onClick={() => handleDelete(slide.id, slide.fileName)}
+                        onClick={() => handleDelete(slide.id, slide.fileName, slide.publicId)}
                         disabled={isDeleting}
                       >
                         {isDeleting ? (
@@ -184,8 +184,8 @@ export function ImageGallery({ refresh, presentationId }: { refresh: number, pre
         onOpen={setOpenModalEdit}
         slide={selectedSlide}
         onChangeSlide={setSelectedSlide}
-        slides={slides}
         setSlides={setSlides}
+        presentationId={presentationId}
       />
     </>
   )

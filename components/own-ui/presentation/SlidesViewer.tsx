@@ -1,4 +1,3 @@
-// components/slides-viewer.tsx
 "use client"
 
 import { useSlides } from "@/hooks/use-slides";
