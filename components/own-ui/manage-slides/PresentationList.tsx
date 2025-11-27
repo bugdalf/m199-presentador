@@ -84,6 +84,17 @@ export default function PresentationList() {
   }
 
   const handleDeletePresentation = async (presentation: Presentation) => {
+    if ((presentation.slides?.length || 0) > 0) {
+      alert("No se puede eliminar una presentación con slides")
+      return
+    }
+
+    // Confirmación antes de eliminar
+    if (!confirm(`¿Estás seguro de eliminar "${presentation.name}"?`)) {
+      return
+    }
+
+
     try {
       const response = await fetch(`/api/presentations`, {
         method: "DELETE",

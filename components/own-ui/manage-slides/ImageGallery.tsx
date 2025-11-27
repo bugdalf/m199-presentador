@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Loader2, PencilIcon, Trash2Icon, YoutubeIcon } from "lucide-react"
+import { Loader2, PencilIcon, Trash2Icon } from "lucide-react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 
