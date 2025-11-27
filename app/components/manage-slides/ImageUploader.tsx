@@ -10,9 +10,10 @@ import { Input } from "@/components/ui/input"
 
 interface ImageUploaderProps {
   onUploadSuccess: () => void
+  presentationId: string
 }
 
-export function ImageUploader({ onUploadSuccess }: ImageUploaderProps) {
+export function ImageUploader({ onUploadSuccess, presentationId }: ImageUploaderProps) {
   const [uploading, setUploading] = useState(false)
   const [preview, setPreview] = useState<string | null>(null)
 
@@ -30,6 +31,7 @@ export function ImageUploader({ onUploadSuccess }: ImageUploaderProps) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
+    formData.append("presentationId", presentationId)
     const file = formData.get("file") as File
 
     if (!file) return
@@ -45,8 +47,8 @@ export function ImageUploader({ onUploadSuccess }: ImageUploaderProps) {
       const data = await response.json()
 
       if (data.success) {
-        setPreview(null)
-        ;(e.target as HTMLFormElement).reset()
+        setPreview(null);
+        (e.target as HTMLFormElement).reset()
         onUploadSuccess()
       } else {
         alert("Error al subir la imagen")

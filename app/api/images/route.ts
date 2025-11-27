@@ -1,29 +1,36 @@
 import { NextResponse } from "next/server"
 import { db } from "@/lib/firebase"
-import { collection, query, orderBy, limit, getDocs } from "firebase/firestore"
+import { collection, query, orderBy, limit, getDocs, where } from "firebase/firestore"
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
+    const { searchParams } = new URL(request.url)
+    const presentationId = searchParams.get("presentationId")
     // Crear referencia a la colección
-    const slidesRef = collection(db, "slides")
-    
-    // Crear query ordenada por uploadedAt descendente (más reciente primero)
+    const presentationsRef = collection(db, "presentations")
+
+    // query para obtener la presentación
     const q = query(
-      slidesRef,
-      orderBy("order", "asc"),
-      limit(200)
+      presentationsRef,
+      where("id", "==", presentationId),
     )
-    
+
     // Ejecutar la consulta
     const querySnapshot = await getDocs(q)
-    
-    // Mapear los documentos a un array
-    const images = querySnapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data(),
-      // Convertir Timestamp a string para serialización JSON
-      uploadedAt: doc.data().uploadedAt?.toDate().toISOString() || null,
-    }))
+    console.log('presentationId', presentationId)
+    console.log('querySnapshot', querySnapshot.docs)
+
+    // Obtener el primer documento (debería ser único por ID)
+    if (querySnapshot.empty) {
+      return NextResponse.json({
+        success: true,
+        images: [],
+        total: 0,
+      })
+    }
+
+    const presentationDoc = querySnapshot.docs[0].data()
+    const images = presentationDoc.slides || []
 
     return NextResponse.json({
       success: true,

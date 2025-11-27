@@ -13,7 +13,7 @@ import Link from "next/link"
 import { FaYoutube } from "react-icons/fa"
 
 
-export function ImageGallery({ refresh }: { refresh: number }) {
+export function ImageGallery({ refresh, presentationId }: { refresh: number, presentationId: string }) {
   const [slides, setSlides] = useState<Slide[]>([])
   const [selectedSlide, setSelectedSlide] = useState<Slide>({
     fileName: '',
@@ -33,8 +33,14 @@ export function ImageGallery({ refresh }: { refresh: number }) {
     const fetchImages = async () => {
       setLoading(true)
       try {
-        const response = await fetch("/api/images")
+        const response = await fetch("/api/images", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
         const data = await response.json()
+        console.log(data)
 
         if (data.success) {
           setSlides(data.images)
