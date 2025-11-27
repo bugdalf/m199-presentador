@@ -10,8 +10,10 @@ import {
   serverTimestamp,
   query,
   limit,
-  deleteDoc
+  deleteDoc,
+  getDoc
 } from "firebase/firestore"
+import { Presentation } from "@/shared/ui-types"
 
 // GET - Obtener todas las presentaciones
 export async function GET() {
@@ -28,9 +30,9 @@ export async function GET() {
     }
 
     const presentations = querySnapshot.docs.map(doc => ({
-      id: doc.id,
       ...doc.data(),
     }))
+    console.log(presentations)
 
     return NextResponse.json({
       success: true,
@@ -67,13 +69,18 @@ export async function POST(request: NextRequest) {
       updatedAt: serverTimestamp(),
     })
 
+    await updateDoc(docRef, {
+      id: docRef.id,
+    })
+
+    // 3️⃣ Respuesta del API
     return NextResponse.json({
       success: true,
       presentation: {
         id: docRef.id,
         name,
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp(),
+        isActive: isActive === true,
+        slides: [],
       },
     })
   } catch (error) {
@@ -84,6 +91,7 @@ export async function POST(request: NextRequest) {
     )
   }
 }
+
 
 // PUT - Actualizar presentación
 export async function PUT(request: NextRequest) {
@@ -103,16 +111,13 @@ export async function PUT(request: NextRequest) {
       name,
       isActive: isActive === true,
       updatedAt: serverTimestamp(),
-    })
+    });
+
+    const presentation = await getDoc(docRef)
 
     return NextResponse.json({
       success: true,
-      presentation: {
-        id,
-        name,
-        isActive,
-        updatedAt: serverTimestamp(),
-      },
+      presentation: presentation.data() as Presentation,
     })
   } catch (error) {
     console.error("Error al actualizar presentación:", error)

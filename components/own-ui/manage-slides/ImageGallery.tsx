@@ -40,7 +40,6 @@ export function ImageGallery({ refresh, presentationId }: { refresh: number, pre
           },
         })
         const data = await response.json()
-        console.log(data)
 
         if (data.success) {
           setSlides(data.images)

@@ -1,6 +1,6 @@
 'use client'
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -35,6 +35,7 @@ export default function CreatePresentationModal({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Crear presentación</DialogTitle>
+          <DialogDescription></DialogDescription>
         </DialogHeader>
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div className="space-y-2">
@@ -54,7 +55,7 @@ export default function CreatePresentationModal({
               onCheckedChange={(checked) => setSelectedPresentation({ ...(selectedPresentation || { name: "" }), isActive: checked === true })}
             />
           </div>
-          <Button type="submit" disabled={!selectedPresentation?.name}>Guardar</Button>
+          <Button type="submit" disabled={!selectedPresentation?.name} className="w-full">Guardar</Button>
         </form>
       </DialogContent>
     </Dialog>

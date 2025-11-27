@@ -13,6 +13,7 @@ export default function PresentationList() {
   const [presentations, setPresentations] = useState<Presentation[]>([])
   const [isLoadingPresentations, setIsLoadingPresentations] = useState(true)
   const [selectedPresentation, setSelectedPresentation] = useState<Presentation | null>(null);
+  const [isEditing, setIsEditing] = useState(false)
 
   useEffect(() => {
     fetchPresentations()
@@ -34,37 +35,17 @@ export default function PresentationList() {
 
   const handleEditPresentation = (presentation: Presentation) => {
     setSelectedPresentation(presentation)
+    setIsEditing(true)
     setOpen(true)
   }
 
   const handleCreatePresentation = () => {
     setSelectedPresentation(null)
+    setIsEditing(false)
     setOpen(true)
   }
 
-  const handleSavePresentation = async (presentation: Presentation) => {
-    if (presentation.id) {
-      try {
-        const response = await fetch(`/api/presentations`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(presentation),
-        })
-        const data = await response.json()
-        if (data.success && data.presentation) {
-          setPresentations((prev) =>
-            prev.map((p) => (p.id === presentation.id ? data.presentation : p))
-          )
-          setOpen(false)
-        }
-      } catch (error) {
-        console.error("Error al actualizar presentación:", error)
-      }
-      return
-    }
-
+  const saveCreatePresentation = async (presentation: Presentation) => {
     try {
       const response = await fetch("/api/presentations", {
         method: "POST",
@@ -83,9 +64,30 @@ export default function PresentationList() {
     }
   }
 
+  const saveEditPresentation = async (presentation: Presentation) => {
+    try {
+      const response = await fetch(`/api/presentations`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(presentation),
+      })
+      const data = await response.json()
+      if (data.success && data.presentation) {
+        setPresentations((prev) =>
+          prev.map((p) => (p.id === presentation.id ? data.presentation : p))
+        )
+        setOpen(false)
+      }
+    } catch (error) {
+      console.error("Error al actualizar presentación:", error)
+    }
+  }
+
   const handleDeletePresentation = async (presentation: Presentation) => {
     if ((presentation.slides?.length || 0) > 0) {
-      alert("No se puede eliminar una presentación con slides")
+      alert("No se puede eliminar una presentación con diapositivas")
       return
     }
 
@@ -121,13 +123,13 @@ export default function PresentationList() {
             <Loader2Icon className="animate-spin" />
           </div>
         ) : (
-          presentations.map(presentation => {
+          presentations.map((presentation, index) => {
             return (
               <div
-                key={presentation.id}
+                key={presentation.id || index}
                 className="flex justify-between items-center border border-dashed rounded p-2"
               >
-                <h2>{presentation.name}</h2>
+                <h2>{presentation.name} ({presentation.slides?.length || 0})</h2>
                 <div className="flex gap-2">
                   <div className={cn("text-xs text-white rounded border flex items-center justify-center px-2", presentation.isActive === true && 'bg-cyan-500')}>{presentation.isActive ? 'Activo' : 'Inactivo'}</div>
                   <Button variant='link'>
@@ -148,7 +150,7 @@ export default function PresentationList() {
         onOpenChange={setOpen}
         selectedPresentation={selectedPresentation}
         setSelectedPresentation={setSelectedPresentation}
-        onSave={handleSavePresentation}
+        onSave={isEditing ? saveEditPresentation : saveCreatePresentation}
       />
     </div>
   )
