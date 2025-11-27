@@ -9,3 +9,10 @@ export interface Slide {
   url: string;
   videoUrl?: string;
 }
+
+export interface Presentation {
+  id?: string
+  name: string
+  isActive?: boolean
+  slides?: Slide[]
+}

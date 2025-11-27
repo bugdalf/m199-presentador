@@ -6,14 +6,7 @@ import CreatePresentationModal from "./CreatePresentationModal"
 import { Loader2Icon, PencilIcon, PresentationIcon, TrashIcon } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { Slide } from "@/shared/ui-types";
-
-export interface Presentation {
-  id?: string
-  name: string
-  isActive?: boolean
-  slides?: Slide[]
-}
+import { Presentation } from "@/shared/ui-types";
 
 export default function PresentationList() {
   const [open, setOpen] = useState(false);
